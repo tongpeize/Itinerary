@@ -14,6 +14,8 @@
 		D378664F1D4B74F00083289B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D378664D1D4B74F00083289B /* LaunchScreen.storyboard */; };
 		D378665A1D4B74F00083289B /* ItineraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37866591D4B74F00083289B /* ItineraryTests.swift */; };
 		D37866651D4B74F00083289B /* ItineraryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37866641D4B74F00083289B /* ItineraryUITests.swift */; };
+		D37866731D4F770E0083289B /* RouteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37866721D4F770E0083289B /* RouteTableViewController.swift */; };
+		D37866751D4F79740083289B /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37866741D4F79740083289B /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		D37866601D4B74F00083289B /* ItineraryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItineraryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37866641D4B74F00083289B /* ItineraryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryUITests.swift; sourceTree = "<group>"; };
 		D37866661D4B74F00083289B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D37866721D4F770E0083289B /* RouteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteTableViewController.swift; sourceTree = "<group>"; };
+		D37866741D4F79740083289B /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			children = (
 				D37866441D4B74F00083289B /* AppDelegate.swift */,
 				D37866461D4B74F00083289B /* ViewController.swift */,
+				D37866721D4F770E0083289B /* RouteTableViewController.swift */,
+				D37866741D4F79740083289B /* TableViewCell.swift */,
 				D37866481D4B74F00083289B /* Main.storyboard */,
 				D378664B1D4B74F00083289B /* Assets.xcassets */,
 				D378664D1D4B74F00083289B /* LaunchScreen.storyboard */,
@@ -259,6 +265,8 @@
 			files = (
 				D37866471D4B74F00083289B /* ViewController.swift in Sources */,
 				D37866451D4B74F00083289B /* AppDelegate.swift in Sources */,
+				D37866751D4F79740083289B /* TableViewCell.swift in Sources */,
+				D37866731D4F770E0083289B /* RouteTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +493,7 @@
 				D378666B1D4B74F00083289B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D378666C1D4B74F00083289B /* Build configuration list for PBXNativeTarget "ItineraryTests" */ = {
 			isa = XCConfigurationList;
@@ -493,6 +502,7 @@
 				D378666E1D4B74F00083289B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D378666F1D4B74F00083289B /* Build configuration list for PBXNativeTarget "ItineraryUITests" */ = {
 			isa = XCConfigurationList;
@@ -501,6 +511,7 @@
 				D37866711D4B74F00083289B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
