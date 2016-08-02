@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		262AAFDA990FC5A1ADE3A507 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CCC7A4E2541EA523CADE9B6 /* Pods.framework */; };
+		D300201F1D506C4300FF79D8 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D300201E1D506C4300FF79D8 /* Utility.swift */; };
+		D30020211D50833400FF79D8 /* DatePickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30020201D50833400FF79D8 /* DatePickViewController.swift */; };
+		D30020231D508FAB00FF79D8 /* HotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30020221D508FAB00FF79D8 /* HotelViewController.swift */; };
 		D37866451D4B74F00083289B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37866441D4B74F00083289B /* AppDelegate.swift */; };
 		D378664A1D4B74F00083289B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D37866481D4B74F00083289B /* Main.storyboard */; };
 		D378664C1D4B74F00083289B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D378664B1D4B74F00083289B /* Assets.xcassets */; };
@@ -41,6 +44,9 @@
 		13C66B4A272B9923E7121141 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		1CCC7A4E2541EA523CADE9B6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A9F428BEF03E847158A66A3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		D300201E1D506C4300FF79D8 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		D30020201D50833400FF79D8 /* DatePickViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickViewController.swift; sourceTree = "<group>"; };
+		D30020221D508FAB00FF79D8 /* HotelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HotelViewController.swift; sourceTree = "<group>"; };
 		D37866411D4B74F00083289B /* Itinerary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Itinerary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D37866441D4B74F00083289B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D37866491D4B74F00083289B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -130,8 +136,11 @@
 				D37866441D4B74F00083289B /* AppDelegate.swift */,
 				D37866721D4F770E0083289B /* RouteTableViewController.swift */,
 				D378BD3D1D4FAF8C00375C41 /* CityViewController.swift */,
+				D30020221D508FAB00FF79D8 /* HotelViewController.swift */,
 				D378BD3B1D4F8AB800375C41 /* Storage.swift */,
 				D37866741D4F79740083289B /* TableViewCell.swift */,
+				D30020201D50833400FF79D8 /* DatePickViewController.swift */,
+				D300201E1D506C4300FF79D8 /* Utility.swift */,
 				D37866481D4B74F00083289B /* Main.storyboard */,
 				D378664B1D4B74F00083289B /* Assets.xcassets */,
 				D378664D1D4B74F00083289B /* LaunchScreen.storyboard */,
@@ -341,11 +350,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30020211D50833400FF79D8 /* DatePickViewController.swift in Sources */,
 				D37866451D4B74F00083289B /* AppDelegate.swift in Sources */,
 				D378BD3E1D4FAF8C00375C41 /* CityViewController.swift in Sources */,
+				D300201F1D506C4300FF79D8 /* Utility.swift in Sources */,
 				D37866751D4F79740083289B /* TableViewCell.swift in Sources */,
 				D37866731D4F770E0083289B /* RouteTableViewController.swift in Sources */,
 				D378BD3C1D4F8AB800375C41 /* Storage.swift in Sources */,
+				D30020231D508FAB00FF79D8 /* HotelViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

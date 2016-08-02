@@ -19,27 +19,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        //let cities = ["北京", "上海", "广州", "深圳", "呼和浩特", "长沙", "厦门", "苏州", "杭州"]
-        //let hotels = ["手撕牛肉大酒店", "乡村爱情主题情侣酒店", "Pokemon Go主题酒店", "如家快捷酒店", "魔兽世界点卡改月卡大酒店"]
-        
-        
-//        try! store.write {
-//            store.deleteAll()
-//            
-//            for (index,name) in cities.enumerate() {
-//                let city = City()
-//                city.name = name
-//                city.id = index
-//                store.add(city, update: true)
-//            }
-//            
-//            for (index,name) in hotels.enumerate() {
-//                let hotel = Hotel()
-//                hotel.name = name
-//                hotel.id = index
-//                store.add(hotel, update: true)
-//            }
-//        }
+        if store.objects(City).count == 0 {
+            let cities = ["北京", "上海", "广州", "深圳", "呼和浩特", "长沙", "厦门", "苏州", "杭州"]
+            let hotels = ["手撕牛肉大酒店", "乡村爱情主题情侣酒店", "Pokemon Go主题酒店", "如家快捷酒店", "魔兽世界点卡改月卡大酒店"]
+            
+            try! store.write {
+                for (index,name) in cities.enumerate() {
+                    let city = City()
+                    city.name = name
+                    city.id = index
+                    store.add(city, update: true)
+                }
+                
+                for (index,name) in hotels.enumerate() {
+                    let hotel = Hotel()
+                    hotel.name = name
+                    hotel.id = index
+                    store.add(hotel, update: true)
+                }
+            }
+        }
         
         return true
     }
