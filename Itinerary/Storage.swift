@@ -9,15 +9,10 @@
 import UIKit
 import RealmSwift
 
-class Route: Object {
-    let destinations = List<Destination>()
-    dynamic var final : City?
-}
 
 class Destination: Object {
     dynamic var order = 0
     dynamic var city : City?
-    let route = LinkingObjects(fromType: Route.self, property: "destinations")
     dynamic var departTime : NSDate? = nil
     dynamic var transport = 0 //0:飞机 1:火车
     dynamic var hotel : Hotel?
@@ -46,28 +41,24 @@ class City: Object {
 }
 
 extension Destination {
-    var lastCity : City? {
-        if self.order == 0 {
-            return nil
-        }else {
-            return self.route.first!.destinations[self.order - 1].city
-        }
-    }
-    
     var nextCity : City? {
-        let c = self.route.first!.destinations.count
-        if self.order == c-1 {
-            return self.route.first!.final
-        }else {
-            return self.route.first!.destinations[self.order + 1].city
+        switch self.order {
+        case -1:
+            return nil
+        case store.objects(Destination).max("order")!:
+            return store.objectForPrimaryKey(Destination.self, key: -1)?.city
+        default:
+            let objs = store.objects(Destination).sorted("order")
+            let index = objs.indexOf(self)
+            return objs[index! + 1].city
         }
     }
     
     var arriveTime : NSDate? {
-        if self.order == 0 {
-            return nil
+        if let des = store.objectForPrimaryKey(Destination.self, key: self.order - 1) {
+            return des.departTime
         }else {
-            return self.route.first!.destinations[self.order - 1].departTime
+            return nil
         }
     }
 }

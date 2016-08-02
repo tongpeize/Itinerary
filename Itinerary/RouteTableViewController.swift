@@ -12,32 +12,23 @@ import RealmSwift
 class RouteTableViewController: UITableViewController {
     
     var token: NotificationToken?
-    var route = store.objects(Route)
+    var route = store.objects(Destination).sorted("order")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        token = store.addNotificationBlock{ _ in
+        token = route.addNotificationBlock{ changes in
             self.tableView.reloadData()
         }
         
         if route.count == 0 {
-            try! store.write {
-                let org = Destination()
-                org.order = 0
-                org.city = store.objects(City).first
-                store.add(org)
-                let r = Route()
-                r.destinations.append(org)
-                r.final = store.objects(City).first
-                store.add(r)
-            }
+            setupRoute()
         }
     }
     
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return (route.first?.destinations.count ?? 0) + 1
+        return route.count ?? 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,7 +36,7 @@ class RouteTableViewController: UITableViewController {
         case tableView.numberOfSections - 1:
             return 2
         case 0:
-            return tableView.numberOfSections == 2 ? 1 : 2
+            return tableView.numberOfSections > 2 ? 2 : 1
         default:
             return 3
         }
@@ -55,43 +46,31 @@ class RouteTableViewController: UITableViewController {
         switch (indexPath.section, indexPath.row) {
         case (0, 0):
             let cell = tableView.dequeueReusableCellWithIdentifier("CityCell") as! CityCell
-            cell.cityName.text = route.first?.destinations[indexPath.section].city?.name ?? "请选择城市"
-            cell.bgIMG.image = UIImage(named: "origin")
-            cell.deletable = false
+            cell.destination = route[1] //0
             return cell
         case (0..<(tableView.numberOfSections - 1), 0):
             let cell = tableView.dequeueReusableCellWithIdentifier("CityCell") as! CityCell
-            cell.cityName.text = route.first?.destinations[indexPath.section].city?.name ?? "请选择城市"
-            cell.bgIMG.image = UIImage(named: "destination")
-            cell.deletable = true
-            cell.deleteBlock = {
-                try! store.write {
-                    self.route.first?.destinations.removeAtIndex(indexPath.section)
-                    store.delete(store.objectForPrimaryKey(Destination.self, key: indexPath.section)!)
-                }
-            }
+            cell.destination = route[indexPath.section + 1]
             return cell
         case (tableView.numberOfSections - 1, 1):
             let cell = tableView.dequeueReusableCellWithIdentifier("CityCell") as! CityCell
-            cell.cityName.text = route.first?.final?.name ?? "请选择城市"
-            cell.bgIMG.image = UIImage(named: "final")
-            cell.deletable = false
+            cell.destination = route[0] //-1
             return cell
         case (0, 1):
             let cell = tableView.dequeueReusableCellWithIdentifier("FlightCell") as! FlightCell
-            cell.destination = route.first?.destinations[0]
+            cell.destination = route[indexPath.section + 1]
             cell.dateButtonPressed = {self.selectDate { date in
                 try! store.write {
-                    self.route.first?.destinations[0].departTime = date
+                    self.route[indexPath.section + 1].departTime = date
                 }
             }}
             return cell
         case (_, 2):
             let cell = tableView.dequeueReusableCellWithIdentifier("FlightCell") as! FlightCell
-            cell.destination = route.first?.destinations[indexPath.section]
+            cell.destination = route[indexPath.section + 1]
             cell.dateButtonPressed = {self.selectDate { date in
                 try! store.write {
-                    self.route.first?.destinations[indexPath.section].departTime = date
+                    self.route[indexPath.section + 1].departTime = date
                 }
             }}
             return cell
@@ -100,7 +79,7 @@ class RouteTableViewController: UITableViewController {
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("HotelCell") as! HotelCell
-            cell.destination = route.first?.destinations[indexPath.section]
+            cell.destination = route[indexPath.section + 1]
             return cell
         }
     }
@@ -121,17 +100,17 @@ class RouteTableViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         switch (indexPath.section, indexPath.row) {
         case (0..<(tableView.numberOfSections - 1), 0):
-            changeCity(route.first?.destinations[indexPath.section])
+            changeCity(route[indexPath.section + 1])
         case (tableView.numberOfSections - 1, 1):
-            changeFinalCity(route.first)
+            changeCity(route[indexPath.section + 1]) //final
         case (0, 1):
-            updateFlightInfo(route.first?.destinations[indexPath.section])
+            updateFlightInfo(route[indexPath.section + 1])
         case (_, 2):
-            updateFlightInfo(route.first?.destinations[indexPath.section])
+            updateFlightInfo(route[indexPath.section + 1])
         case (tableView.numberOfSections - 1, 0):
-            addDestination(route.first)
+            addDestination()
         default:
-            updateHotelInfo(route.first?.destinations[indexPath.section])
+            updateHotelInfo(route[indexPath.section + 1])
         }
     }
     
@@ -144,35 +123,26 @@ class RouteTableViewController: UITableViewController {
         }
     }
     
-    func changeFinalCity(route: Route?) {
+    func changeFinalCity(destination: Destination?) {
         print("change final city")
         selectCity { city in
             try! store.write {
-                route?.final = city
+                destination?.city = city
             }
         }
     }
     
     func updateFlightInfo(destination: Destination?) {
-        print("update flight info")
-        guard destination != nil else {
-            fatalError("error: destination nil (flight)")
-        }
-        
-        
+        //nil
     }
     
-    func addDestination(route: Route?) {
-        print("add destination")
-        guard route != nil else {
-            fatalError("error: route nil (add destination)")
-        }
+    func addDestination() {
         selectCity { city in
             try! store.write {
                 let destination = Destination()
                 destination.city = city
-                destination.order = route!.destinations.count
-                route!.destinations.append(destination)
+                destination.order = self.route.max("order")! + 1
+                store.add(destination)
             }
         }
     }
@@ -209,5 +179,18 @@ class RouteTableViewController: UITableViewController {
         }
         navigationController?.pushViewController(nav, animated: true)
     }
-
+    
+    
+    func setupRoute() {
+        try! store.write {
+            let origin = Destination()
+            origin.order = 0
+            origin.city = store.objects(City).first
+            store.add(origin)
+            let final = Destination()
+            final.order = -1
+            final.city = store.objects(City).first
+            store.add(final)
+        }
+    }
 }

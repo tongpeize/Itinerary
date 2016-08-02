@@ -17,18 +17,32 @@ class CityCell: UITableViewCell {
     
     @IBOutlet weak var deleteButton: UIButton!
     
-    var deleteBlock : cellBlock?
-    
-    
-    var deletable = true {
+    var destination : Destination? {
         didSet {
-            deleteButton.hidden = !deletable
+            guard destination != nil else {
+                fatalError("flight cell error: destination nil")
+            }
+            switch destination!.order {
+            case 0:
+                //出发
+                self.bgIMG.image = UIImage(named: "origin")
+                deleteButton.hidden = true
+            case -1:
+                //到达
+                self.bgIMG.image = UIImage(named: "final")
+                deleteButton.hidden = true
+            default:
+                //目的地
+                self.bgIMG.image = UIImage(named: "destination")
+                deleteButton.hidden = false
+            }
+            self.cityName.text = destination!.city?.name ?? "请选择城市"
         }
     }
     
     @IBAction func deleteButtonPressed(sender: AnyObject) {
-        if deleteBlock != nil {
-            deleteBlock!()
+        try! store.write {
+            store.delete(self.destination!)
         }
     }
 }
@@ -120,10 +134,5 @@ class HotelCell: UITableViewCell {
 
 
 class AddCell: UITableViewCell {
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        //TODO
-    }
     
 }
